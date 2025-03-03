@@ -1,3 +1,3 @@
 A simple shot boundary detection python script capable of cutting a video into scenes automatically.
 
-Currently suporrts standard cuts with more to be added in the future.
+Currently supports standard cuts with more to be added in the future.
