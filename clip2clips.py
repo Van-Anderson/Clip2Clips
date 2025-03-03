@@ -7,10 +7,12 @@ import tkinter
 from skimage import metrics
 from tkinter import filedialog
 
+cutoff_time= 0.25
 
 def main(input_video, output_folder):
     original_video=cv2.VideoCapture(input_video)
     fps=original_video.get(cv2.CAP_PROP_FPS)
+    video_length=original_video.get(cv2.CAP_PROP_FRAME_COUNT)/fps
     cur_frame=1
     first_new_frame=[]
 
@@ -56,6 +58,16 @@ def main(input_video, output_folder):
     print(first_new_frame)
     original_video.release()
     cv2.destroyAllWindows()
+    for time in first_new_frame:
+        if time<cutoff_time or(time>(video_length-cutoff_time)):
+            first_new_frame.remove(time)
+    first_new_frame.append(video_length)
+    first_new_frame.insert(0,0)
+    cut_and_paste(first_new_frame, output_folder)
+
+def cut_and_paste(frame_list, output_path):
+        print(frame_list)
+
 
 
 if __name__=="__main__":    
