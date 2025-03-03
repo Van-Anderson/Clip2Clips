@@ -10,6 +10,8 @@ from tkinter import filedialog
 cutoff_time= 0.25
 
 def main(input_video, output_folder):
+    video_name=input_video.rsplit("/",1)[1].split(".")[0]
+    print(video_name)
     original_video=cv2.VideoCapture(input_video)
     fps=original_video.get(cv2.CAP_PROP_FPS)
     video_length=original_video.get(cv2.CAP_PROP_FRAME_COUNT)/fps
@@ -63,9 +65,9 @@ def main(input_video, output_folder):
             first_new_frame.remove(time)
     first_new_frame.append(video_length)
     first_new_frame.insert(0,0)
-    cut_and_paste(first_new_frame, output_folder)
+    cut_and_paste(first_new_frame, output_folder,video_name)
 
-def cut_and_paste(frame_list, output_path):
+def cut_and_paste(frame_list, output_path, folder_base_name):
         print(frame_list)
 
 
@@ -74,4 +76,8 @@ if __name__=="__main__":
     tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
     original_video = filedialog.askopenfilename()
     output_folder = filedialog.askdirectory()
-    main(original_video,output_folder)
+    print(original_video)
+    if not original_video or not output_folder:
+        print("Select video and folder to place clips")
+    else:
+        main(original_video,output_folder)
